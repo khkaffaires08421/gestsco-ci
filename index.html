@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GestSco CI – Gestion scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F2F5F1;--sf:#fff;--ink:#13221A;--mu:#5B6C62;--ln:#DAE3DB;--g:#0A7A4B;--o:#F77F00;--on:#fff;--er:#B3261E;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0E1713;--sf:#16231D;--ink:#E6F0E9;--mu:#9DB0A4;--ln:#26382E;--g:#35B77F;--o:#FFA033;--on:#0E1713;--er:#F2B8B5}}
+:root[data-theme=dark]{--bg:#0E1713;--sf:#16231D;--ink:#E6F0E9;--mu:#9DB0A4;--ln:#26382E;--g:#35B77F;--o:#FFA033;--on:#0E1713;--er:#F2B8B5}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.5 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+h1{font-size:24px;font-weight:800;margin:0 0 16px;letter-spacing:-.02em}h2{font-size:16px;margin:0 0 10px;font-weight:800}
+.shell{display:flex;min-height:100vh}nav{width:220px;background:var(--g);color:var(--on);padding:20px 12px;flex:none;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px}
+nav .lg{font-weight:800;font-size:17px;padding:0 10px 4px;line-height:1.2}nav .sb{font-size:12px;opacity:.85;padding:0 10px 16px}
+nav button{all:unset;cursor:pointer;padding:10px 12px;border-radius:10px;font-weight:600}nav button.on{background:rgba(255,255,255,.2);box-shadow:inset 3px 0 0 var(--o)}nav button:hover{background:rgba(255,255,255,.12)}nav .sp{flex:1}
+main{flex:1;padding:24px;min-width:0;max-width:1200px}
+.dashboard-hero{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 24px;margin-bottom:16px;border:1px solid #d9e8e0;border-top:5px solid #13804a;border-radius:15px;background:linear-gradient(120deg,#fff 0%,#f0fdf4 48%,#fff7ed 100%)}.dashboard-kicker{font-size:11px;font-weight:800;letter-spacing:1.5px;color:#13804a}.dashboard-hero h2{font-size:clamp(22px,3vw,30px);margin:7px 0;color:#17365d}.dashboard-hero p{margin:4px 0 0;color:#667085}.dashboard-kpis{margin-bottom:16px}.dashboard-kpis>div{min-height:112px;border:0!important;border-radius:15px!important;box-shadow:0 6px 22px #18304a0d;padding:18px!important}.dashboard-kpis>div:nth-child(1){background:#eff6ff;border-top:4px solid #2563eb!important}.dashboard-kpis>div:nth-child(1) b{color:#1d4ed8}.dashboard-kpis>div:nth-child(2){background:#ecfdf3;border-top:4px solid #16a34a!important}.dashboard-kpis>div:nth-child(2) b{color:#15803d}.dashboard-kpis>div:nth-child(3){background:#fff1f2;border-top:4px solid #e11d48!important}.dashboard-kpis>div:nth-child(3) b{color:#be123c}.dashboard-kpis>div:nth-child(4){background:#f5f3ff;border-top:4px solid #7c3aed!important}.dashboard-kpis>div:nth-child(4) b{color:#6d28d9}.dashboard-panel-title{color:#17365d}.dashboard-kpis b{font-size:30px!important}.dashboard-panel{border-radius:15px;box-shadow:0 4px 18px #18304a08}
+@media(max-width:760px){.dashboard-hero{align-items:stretch;flex-direction:column}}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:16px;margin-bottom:16px}.sc{overflow-x:auto}
+.kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}.kp div{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px;border-top:4px solid var(--g)}.kp div:nth-child(even){border-top-color:var(--o)}
+.kp b{display:block;font-size:26px;font-weight:800}.kp span{color:var(--mu);font-size:13px}
+.gr{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}.ch{position:relative;height:250px}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:8px;border-bottom:1px solid var(--ln);text-align:left;white-space:nowrap}th{color:var(--mu);font-size:13px;font-weight:600}td.n{font-variant-numeric:tabular-nums}
+input,select{font:inherit;padding:9px 11px;border:1px solid var(--ln);border-radius:9px;background:var(--bg);color:var(--ink);max-width:100%}input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid var(--o);outline-offset:1px}
+.btn,button.s,.ex button{font:inherit;font-weight:600;border-radius:9px;border:0;padding:9px 14px;cursor:pointer;background:var(--g);color:var(--on)}button.s,.ex button{background:var(--sf);color:var(--ink);border:1px solid var(--ln);padding:6px 10px;font-size:13px}.ex{display:inline-flex;gap:4px}
+.bar2{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.fm{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}.fm label{display:block;font-size:13px;color:var(--mu)}.fm input,.fm select{width:100%}
+.th{width:34px;height:34px;border-radius:50%;object-fit:cover;background:var(--ln);display:inline-block}.im{height:60px;max-width:140px;background:#fff;border:1px solid var(--ln);border-radius:8px;margin-top:6px;display:block}
+.nt input{width:62px;text-align:center;padding:6px}.warn{background:var(--o);color:#1a1a1a;padding:8px 12px;border-radius:10px;margin-bottom:12px;font-weight:600}
+.ins li{margin:4px 0}.bd{display:inline-block;padding:1px 9px;border-radius:99px;border:1.5px solid var(--g);color:var(--g);font-size:12px;font-weight:600}.bd.r{border-color:var(--er);color:var(--er)}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9}#toast.show{opacity:1}
+.lgn{min-height:100vh;display:grid;place-items:center;padding:16px;background:linear-gradient(var(--g) 0 42%,var(--bg) 42%)}.lgn .card{width:100%;max-width:380px;padding:28px;border-top:5px solid var(--o)}.lgn input{width:100%;margin:4px 0 12px}.lgn .btn{width:100%;padding:12px}
+@media(max-width:760px){.shell{flex-direction:column}nav{width:100%;height:auto;position:static;flex-direction:row;flex-wrap:wrap;padding:12px}nav .lg,nav .sb{display:none}nav .sp{display:none}main{padding:16px}}
+ .dashboard-credit{margin:22px 0 4px;padding:14px 16px;text-align:center;font-size:13px;font-weight:800;letter-spacing:.3px;color:#17365d;background:linear-gradient(90deg,#fff7ed,#f0fdf4,#fff);border:1px solid #d9e8e0;border-radius:12px}
+.page-titlebar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px}.page-titlebar h1{margin:0}.top-credit{font-size:clamp(12px,1.25vw,15px);font-weight:900;color:#0A7A4B;text-align:right;background:linear-gradient(90deg,#fff7ed,#f0fdf4);border:1px solid #b8d9c5;border-radius:10px;padding:9px 13px;box-shadow:0 3px 12px #18304a12}.login-credit{font-weight:900;text-align:center;color:#fff;font-size:clamp(14px,2vw,18px);line-height:1.4;padding:14px 18px;margin-bottom:16px;text-shadow:0 2px 5px #06452c;max-width:700px}.lgn{grid-template-columns:1fr;align-content:center;justify-items:center}.lgn .card{margin:0 auto}
+</style>
+</head>
+<body>
+<div id="app"></div><div id="toast" role="status"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+<script>
+var HASH='96cc8d23c34321f78921cda4379aca7b8d088cf8f2e97dabb5b6f92c88813cd4',db=null,ok=false,local=false,E=[],T='1',tab='tb',cls='',ed=null,charts=[];
+var C={nom:'',drena:'',iepp:'',code:'',adr:'',tel:'',annee:'2026-2027',dir:'',sig:'',cac:''};
+var NV=['CP1','CP2','CE1','CE2','CM1','CM2','6e','5e','4e','3e','2nde A','2nde C','1ère A','1ère C','1ère D','Tle A','Tle C','Tle D'],cn='6e';
+var P1=[['Écriture',1,10],['Copie',1,10],['Mathématiques',1,20],['EDHC',1,10],['Expression écrite',1,10],['Dessin',1,10],['Lecture',1,10],['Dictée',1,10],['Poésie / Chant',1,10]];
+var P2=[['Exploitation de texte',1,30],['Éveil au milieu',1,30],['Dictée',1,10],['Mathématiques',1,30]];
+var P3=[['Exploitation de texte',1,50],['Éveil au milieu',1,50],['Dictée',1,20],['Mathématiques',1,50]];
+var FR=c=>[['Français : Expression orale + Lecture',1],['Français : Orthographe + Grammaire',1],['Français : Expression écrite',c]];
+var COL=(c,v)=>FR(c).concat([['Anglais',2],['Histoire-Géographie',2],['Mathématiques',3],['Physique-Chimie',2],['SVT',2],['EDHC',1],['EPS',1],['Arts Plastiques / Éd. Musicale',1]],v?[['LV2 (All./Esp.)',1]]:[],[['Conduite',1]]);
+var LYC=[['Français',3],['Anglais',2],['LV2 (All./Esp.)',2],['Histoire-Géographie',2],['Mathématiques',3],['Philosophie',2],['Physique-Chimie',2],['SVT',2],['EDHC',1],['EPS',1],['Conduite',1]];
+var D={CP1:P1,CP2:P1,CE1:P2,CE2:P2,CM1:P3,CM2:P3,'6e':COL(1,0),'5e':COL(1,0),'4e':COL(2,1),'3e':COL(2,1)};
+NV.slice(10).forEach(n=>D[n]=LYC);
+var SB=(n,period=T)=>{var t=(C.mat||{})[n],a=t?t.split('\n').map(l=>l.split(';')).filter(x=>x[0].trim()).map(x=>[x[0].trim(),parseFloat(x[1])||1,parseFloat(x[2])||0]):(D[n]||[]);a=a.map(x=>[x[0],x[1],x[2]||(NV.indexOf(n)<4?10:20)]);if(n==='CM2'&&(period==='EB1'||period==='EB2')&&!a.some(x=>x[0]==='EPS'))a=a.concat([['EPS',1,20]]);if(['CE1','CE2','CM1','CM2'].includes(n)){var ordre=['Exploitation de texte','Éveil au milieu','Dictée','Mathématiques','EPS'];a.sort((x,y)=>{var ix=ordre.indexOf(x[0]),iy=ordre.indexOf(y[0]);return (ix<0?99:ix)-(iy<0?99:iy)});}return a};
+var ix=a=>NV.reduce((p,n,i)=>a==n||a.indexOf(n+' ')==0?i:p,-1);
+var ordE=(a,b)=>ix(cO(a))-ix(cO(b))||cO(a).localeCompare(cO(b))||a.nom.localeCompare(b.nom);
+var G={p:[['Dictée',2],['Lecture',2],['Expression écrite',2],['Grammaire/Conjugaison',2],['Mathématiques',4],['Éveil scientifique',2],['Histoire-Géographie',2],['EDHC',1],['EPS',1],['Arts plastiques',1]],
+c:[['Français',4],['Mathématiques',4],['Anglais',3],['Histoire-Géographie',2],['SVT',2],['Physique-Chimie',2],['EDHC',1],['EPS',1],['Arts plastiques',1],['Conduite',1]],
+l:[['Français',3],['Philosophie',2],['Mathématiques',4],['Anglais',2],['LV2',2],['Histoire-Géographie',2],['SVT',3],['Physique-Chimie',3],['EDHC',1],['EPS',1]]};
+var $=s=>document.querySelector(s),esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+var grp=n=>NV.indexOf(n)<6?'p':'s',bar=n=>NV.indexOf(n)<4?10:20,cO=s=>s.niveau+(s.div?' '+s.div:''),f2=n=>n==null?'–':(Math.round(n*100)/100).toFixed(2).replace('.',','),fd=v=>v?v.split('-').reverse().join('/'):'',fm=x=>x.indexOf('image/png')>0?'PNG':'JPEG',pl=()=>T==='A'?'Annuel':({'1':'Trimestre 1','2':'Trimestre 2','3':'Trimestre 3','C1':'Composition C1','C2':'Composition C2','C3':'Composition C3','C4':'Composition C4','EB1':'Examen blanc EB1','EB2':'Examen blanc EB2'}[T]||T);
+var toast=m=>{var t=$('#toast');t.textContent=m;t.className='show';setTimeout(()=>t.className='',2600)};
+var LOCAL_KEY='GESTSCO_CI_DONNEES_V1';
+function loadLocalData(){try{var raw=localStorage.getItem(LOCAL_KEY);if(!raw)return false;var x=JSON.parse(raw);if(x&&typeof x==='object'){if(x.ecole)C=Object.assign(C,x.ecole);C.annee='2026-2027';if(Array.isArray(x.eleves))E=x.eleves;return true}}catch(e){console.error('Lecture locale impossible',e)}return false}
+function persistLocalData(){try{localStorage.setItem(LOCAL_KEY,JSON.stringify({version:1,updatedAt:new Date().toISOString(),ecole:C,eleves:E}));return true}catch(e){console.error('Écriture locale impossible',e);toast('Sauvegarde locale impossible : espace de stockage insuffisant. Exportez une sauvegarde.');return false}}
+function moy(s,t){
+ if(t==='A'){
+  if(NV.indexOf(s.niveau)<6){
+   var terms=s.niveau==='CM2'?[['C1',1],['C2',1],['EB1',1],['EB2',2]]:[['C1',1],['C2',1],['C3',1],['C4',2]],sum=0,w=0;
+   terms.forEach(q=>{var v=moy(s,q[0]);if(v!=null){sum+=v*q[1];w+=q[1]}});
+   return w?sum/w:null;
+  }
+  var a=['1','2','3'].map(x=>moy(s,x)).filter(x=>x!=null);
+  return a.length?a.reduce((p,c)=>p+c,0)/a.length:null;
+ }
+ var n=(s.notes||{})[t]||{},sp=0,sd=0;
+ SB(s.niveau,t).forEach((m,i)=>{var v=parseFloat(n['m'+i]);if(!isNaN(v)){sp+=v*m[1];sd+=m[2]*m[1]}});
+ return sd?sp/sd*bar(s.niveau):null;
+}
+function tot(s,t){var n=(s.notes||{})[t]||{},p=0,d=0;SB(s.niveau).forEach((m,i)=>{var v=parseFloat(n['m'+i]);if(!isNaN(v))p+=v*m[1];d+=m[2]*m[1]});return [p,d]}
+var appr=(m,b)=>{if(m==null)return '';var r=m/b*20;return r>=16?'Excellent':r>=14?'Très bien':r>=12?'Bien':r>=10?'Assez bien':r>=8?'Insuffisant':'Médiocre'};
+var apprPrimaire=(m,b)=>{if(m==null||!b)return '';var r=m/b*20;return r>=16?'Excellent':r>=14?'Très bien':r>=12?'Bien':r>=10?'Assez bien':'À renforcer'};
+var dist=(m,b)=>{if(m==null)return '';var r=m/b*20;return r>=16?'Félicitations':r>=14?'Encouragements':r>=12?'Tableau d’honneur':''};
+var dec=s=>{var m=moy(s,'A');return m==null?'':m>=bar(s.niveau)/2?'Admis(e)':'Redouble'};
+var rk=(l,t,s)=>{var m=moy(s,t);return m==null?'':1+l.filter(x=>{var v=moy(x,t);return v!=null&&v>m}).length};
+var classes=()=>{var o={};E.forEach(s=>o[cO(s)]=1);return Object.keys(o).sort((a,b)=>ix(a)-ix(b)||a.localeCompare(b))};
+var byCls=()=>{var c=classes();if(!c.includes(cls))cls=c[0]||'';return E.filter(s=>cO(s)==cls).sort((a,b)=>a.nom.localeCompare(b.nom))};
+
+/* ---------- accès ---------- */
+async function login(){var u=$('#u').value.trim(),p=$('#p').value;
+ try{var b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('scolaire-ci|'+u+'|'+p)),h=[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+ if(h===HASH){ok=true;try{localStorage.setItem('GESTSCO_CI_AUTH_OK_V1','1')}catch(e){}boot()}else $('#err').textContent='Nom d’utilisateur ou mot de passe incorrect.'}catch(e){$('#err').textContent='Connexion impossible sur ce navigateur.'}}
+async function boot(){
+ try{if(typeof claude!=='undefined'&&claude&&typeof claude.use==='function')db=await claude.use('db')}catch(e){db=null}
+ if(typeof Chart!=='undefined'){Chart.defaults.color=getComputedStyle(document.body).color;Chart.defaults.font.family='"Plus Jakarta Sans",system-ui,sans-serif'}
+ var fr=()=>{if(!/INPUT|SELECT|TEXTAREA/.test((document.activeElement||{}).tagName||''))render()};
+ if(db){local=false;try{db.doc('config/ecole').onSnapshot(s=>{if(s.exists)C=Object.assign(C,s.data());C.annee='2026-2027';fr()},()=>toast('Lecture des paramètres en ligne impossible.'));db.collection('eleves').onSnapshot(s=>{E=s.docs.map(d=>{var o=d.data();o.id=d.id;return o});fr()},()=>toast('Lecture des élèves en ligne impossible.'))}catch(e){db=null;local=true;loadLocalData()}}
+ else{local=true;loadLocalData()}
+ render()
+}
+function logout(){ok=false;try{localStorage.removeItem('GESTSCO_CI_AUTH_OK_V1')}catch(e){}E=[];render()}
+
+/* ---------- exports ---------- */
+async function save(name,data){
+ try{if(typeof claude!=='undefined'&&claude&&typeof claude.use==='function'){var d=await claude.use('downloads');if(d&&typeof d.save==='function'){await d.save({filename:name,data:data});return}}}catch(e){}
+ try{var blob=data instanceof Blob?data:new Blob([data],{type:name.endsWith('.pdf')?'application/pdf':name.endsWith('.xlsx')?'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':'application/octet-stream'});var url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}catch(e){toast('Téléchargement impossible dans ce navigateur.')}
+}
+async function exTable(f,title,head,body,fn){
+ if(f=='x'){var wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([head].concat(body)),'Feuille1');return save(fn+'.xlsx',XLSX.write(wb,{type:'array',bookType:'xlsx'}))}
+ if(f=='w'){var h='<html><head><meta charset="utf-8"></head><body style="font-family:Arial"><h2>'+esc(title)+'</h2><p>'+esc(C.nom)+' – '+esc(C.annee)+'</p><table border="1" cellspacing="0" cellpadding="4" style="border-collapse:collapse;font-size:10pt"><tr>'+head.map(c=>'<th bgcolor="#0A7A4B" style="color:#fff">'+esc(c)+'</th>').join('')+'</tr>'+body.map(r=>'<tr>'+r.map(c=>'<td>'+esc(c)+'</td>').join('')+'</tr>').join('')+'</table></body></html>';return save(fn+'.doc',new Blob(['\ufeff'+h],{type:'application/msword'}))}
+ var d=new jspdf.jsPDF(head.length>7?'l':'p','mm','a4');d.setFontSize(14).text(title,14,16);d.setFontSize(9).text(C.nom+' - '+C.annee,14,22);
+ d.autoTable({head:[head],body:body,startY:27,styles:{fontSize:8},headStyles:{fillColor:[10,122,75]}});return save(fn+'.pdf',d.output('arraybuffer'))}
+var exb=fn=>`<button onclick="${fn}('x')">Excel</button><button onclick="${fn}('w')">Word</button><button onclick="${fn}('p')">PDF</button>`;
+function xEl(f){exTable(f,'Liste des élèves',['Matricule','Nom','Prénoms','Sexe','Date de naissance','Lieu de naissance','Classe','Redoublant','Statut','Nationalité'],E.slice().sort((a,b)=>NV.indexOf(a.niveau)-NV.indexOf(b.niveau)||cO(a).localeCompare(cO(b))||a.nom.localeCompare(b.nom)).map(s=>[s.mat||'',s.nom,s.prenoms,s.sexe,fd(s.ddn),s.lieu||'',cO(s),s.red,s.aff,s.nat]),'liste-eleves')}
+function statRows(){var r=NV.filter(n=>E.some(s=>s.niveau==n)).map(n=>{var l=E.filter(s=>s.niveau==n),g=l.filter(s=>s.sexe=='M').length;return [n,g,l.length-g,l.length,l.filter(s=>s.red=='Oui').length,l.filter(s=>s.aff=='Affecté(e)').length]});
+ var t=[0,1,2,3,4,5].map(i=>i?r.reduce((p,x)=>p+x[i],0):'TOTAL');return r.concat([t])}
+function xSt(f){exTable(f,'Effectifs par niveau',['Niveau','Garçons','Filles','Total','Redoublants','Affectés'],statRows(),'effectifs')}
+function rowsRs(){return byCls().map(s=>({s:s,m:moy(s,T)})).sort((a,b)=>(b.m==null?-1:b.m)-(a.m==null?-1:a.m))}
+function xRs(f){var l=rowsRs();if(!l.length)return toast('Aucun élève dans cette classe.');var B=bar(l[0].s.niveau),sb=SB(l[0].s.niveau),ss=l.map(x=>x.s);
+ exTable(f,'Résultats '+cls+' - '+pl(),['Rang','Matricule','Nom','Prénoms'].concat(sb.map(x=>x[0]+' (coef '+x[1]+')'),['Moyenne /'+B,'Appréciation',T=='A'?'Décision':'Distinction']),
+ l.map(x=>[rk(ss,T,x.s),x.s.mat||'',x.s.nom,x.s.prenoms].concat(sb.map((m,i)=>((x.s.notes||{})[T]||{})['m'+i]==null?'':(x.s.notes[T]['m'+i])),[x.m==null?'':+x.m.toFixed(2),appr(x.m,B),T=='A'?dec(x.s):dist(x.m,B)])),'resultats-'+cls.replace(/\s/g,'_')+'-'+T)}
+
+/* ---------- bulletin & cartes PDF ---------- */
+function bull(d,s,t,l){var g=grp(s.niveau),B=bar(s.niveau),sb=G[g],n=(s.notes||{})[t]||{},m=moy(s,t),W=210,ms=l.map(x=>moy(x,t)).filter(x=>x!=null),av=ms.length?ms.reduce((p,c)=>p+c,0)/ms.length:null;
+ d.setTextColor(20).setFont('helvetica','bold').setFontSize(8).text("MINISTÈRE DE L'ÉDUCATION NATIONALE\nET DE L'ALPHABÉTISATION",14,12);
+ d.setFont('helvetica','normal').text('DRENA : '+C.drena+(g=='p'?'\nIEPP : '+C.iepp:''),14,21);
+ d.setFont('helvetica','bold').text("RÉPUBLIQUE DE CÔTE D'IVOIRE",W-14,12,{align:'right'});d.setFont('helvetica','italic').text('Union - Discipline - Travail',W-14,16,{align:'right'});
+ d.setFillColor(10,122,75).rect(14,29,W-28,11,'F');d.setFillColor(247,127,0).rect(14,40,W-28,1.2,'F');
+ d.setTextColor(255).setFont('helvetica','bold').setFontSize(13).text('BULLETIN DE NOTES - '+(t=='A'?'ANNUEL':'TRIMESTRE '+t),W/2,36.5,{align:'center'});
+ d.setTextColor(20).setFontSize(10).text(C.nom+'   |   Année scolaire '+C.annee,W/2,47,{align:'center'});
+ if(s.photo)d.addImage(s.photo,'JPEG',14,52,27,34);else d.setDrawColor(150).rect(14,52,27,34);
+ d.setFontSize(12).text(s.nom+' '+s.prenoms,46,58);d.setFont('helvetica','normal').setFontSize(9.5).text(['Matricule : '+(s.mat||'-'),'Né(e) le '+(fd(s.ddn)||'-')+' à '+(s.lieu||'-'),'Sexe : '+(s.sexe=='M'?'Masculin':'Féminin')+'     Statut : '+(s.aff||'-'),'Classe : '+cO(s)+'     Effectif : '+l.length,'Redoublant(e) : '+(s.red||'Non')],46,64,{lineHeightFactor:1.5});
+ var hd={fillColor:[10,122,75],textColor:255};
+ if(t=='A')d.autoTable({startY:92,margin:{left:14,right:14},theme:'grid',headStyles:hd,head:[['Période','Moyenne /'+B,'Rang','Professeur']],body:['1','2','3','A'].map(p=>[p=='A'?'MOYENNE ANNUELLE':'Trimestre '+p,f2(moy(s,p)),rk(l,p,s),''])});
+ else{var tp=0,tc=0;var bd=sb.map((x,i)=>{var v=parseFloat(n['m'+i]);if(isNaN(v))return [x[0],x[1],'','',''];tp+=v*x[1];tc+=x[1];return [x[0],x[1],f2(v),f2(v*x[1]),appr(v,B)]});
+ d.autoTable({startY:92,margin:{left:14,right:14},theme:'grid',headStyles:hd,styles:{fontSize:9},head:[['Matières','Coef','Note /'+B,'Note x coef','Professeur']],body:bd.map(r=>r.slice(0,4).concat([''])),foot:[['TOTAL',tc,'',f2(tp),'']],footStyles:{fillColor:[230,236,230],textColor:20}})}
+ d.autoTable({startY:d.lastAutoTable.finalY+5,margin:{left:14,right:14},theme:'grid',headStyles:{fillColor:[247,127,0],textColor:255},styles:{fontSize:9,halign:'center'},head:[['Moyenne /'+B,'Rang','Moy. de la classe','Plus forte','Plus faible']],body:[[f2(m),rk(l,t,s)?rk(l,t,s)+'/'+l.length:'-',f2(av),f2(ms.length?Math.max.apply(0,ms):null),f2(ms.length?Math.min.apply(0,ms):null)]]});
+ var y=d.lastAutoTable.finalY+8;d.setFont('helvetica','bold').setFontSize(10).setTextColor(20).text('Professeur :',14,y);d.setDrawColor(130).setLineWidth(.25).line(38,y+1,118,y+1);
+ if(t=='A'&&m!=null){d.setFontSize(12).setTextColor(m>=B/2?10:179,m>=B/2?122:38,m>=B/2?75:30).text('DÉCISION : '+(m>=B/2?'ADMIS(E) EN CLASSE SUPÉRIEURE':'REDOUBLE'),14,y+8)}
+ d.setTextColor(20).setFontSize(9).setFont('helvetica','normal').text('Cachet',W-82,236,{align:'center'});d.text('Signature du directeur',W-42,236,{align:'center'});
+ if(C.cac)try{d.addImage(C.cac,fm(C.cac),W-96,238,30,24)}catch(e){}if(C.sig)try{d.addImage(C.sig,fm(C.sig),W-66,238,38,24)}catch(e){}d.setFont('helvetica','bold').text(C.dir||'',W-42,274,{align:'center'});
+ d.setFont('helvetica','italic').setFontSize(7).setTextColor(120).text(C.nom+(C.adr?' - '+C.adr:'')+(C.tel?' - Tél : '+C.tel:''),W/2,288,{align:'center'})}
+function bulls(list,fn){if(!list.length)return toast('Aucun élève.');var d=new jspdf.jsPDF('p','mm','a4');list.forEach((s,i)=>{if(i)d.addPage();bull(d,s,T,E.filter(x=>cO(x)==cO(s)))});save(fn+'.pdf',d.output('arraybuffer'))}
+function bull1(id){var s=E.find(x=>x.id==id);bulls([s],'bulletin-'+s.nom+'-'+T)}
+function cartes(l,fn){if(!l.length)return toast('Aucun élève.');var d=new jspdf.jsPDF('p','mm','a4');
+ l.forEach((s,i)=>{if(i&&i%10==0)d.addPage();var k=i%10,x=12+(k%2)*93,y=10+Math.floor(k/2)*57,w=85.6;
+ d.setDrawColor(10,122,75).setLineWidth(.4).roundedRect(x,y,w,54,2,2,'S');d.setFillColor(10,122,75).rect(x,y,w,11,'F');d.setFillColor(247,127,0).rect(x,y+11,w,1.2,'F');
+ d.setTextColor(255).setFont('helvetica','bold').setFontSize(7).text((C.nom||'ÉTABLISSEMENT').toUpperCase().slice(0,50),x+w/2,y+4.5,{align:'center'});d.setFontSize(6).setFont('helvetica','normal').text('CARTE SCOLAIRE - '+C.annee,x+w/2,y+8.5,{align:'center'});
+ d.setTextColor(20);if(s.photo)d.addImage(s.photo,'JPEG',x+3,y+15,22,28);else d.setDrawColor(150).rect(x+3,y+15,22,28);
+ d.setFontSize(8).setFont('helvetica','bold').text(s.nom,x+28,y+19);d.setFont('helvetica','normal').text(s.prenoms,x+28,y+23);
+ d.setFontSize(6.5).text(['Matricule : '+(s.mat||'-'),'Né(e) le '+(fd(s.ddn)||'-')+' à '+(s.lieu||'-'),'Classe : '+cO(s),'Sexe : '+s.sexe+'   '+(s.aff||'')],x+28,y+28,{lineHeightFactor:1.4});
+ d.setFontSize(5.5).text('Le Directeur',x+w-20,y+38,{align:'center'});if(C.cac)d.addImage(C.cac,fm(C.cac),x+w-38,y+37,14,14);if(C.sig)d.addImage(C.sig,fm(C.sig),x+w-30,y+41,17,8)});
+ save(fn+'.pdf',d.output('arraybuffer'))}
+
+function frame(d){var W=210,H=297,u=(W-14)/3;d.setDrawColor(247,127,0).setLineWidth(1.2).rect(7,6,W-14,H-12);d.setDrawColor(0,150,90).setLineWidth(.5).rect(9.5,8.5,W-19,H-17);d.setFillColor(247,127,0).rect(7,6,u,2.4,'F');d.setDrawColor(190).setLineWidth(.2).rect(7+u,6,u,2.4,'S');d.setFillColor(0,150,90).rect(7+2*u,6,u,2.4,'F')}
+function wm(d,x,y,w){if(!C.arm)return;try{d.setGState(new d.GState({opacity:.1}));d.addImage(C.arm,fm(C.arm),x,y,w,w);d.setGState(new d.GState({opacity:1}))}catch(e){}}
+function bull(d,s,t,l){var g=grp(s.niveau),B=bar(s.niveau),sb=SB(s.niveau),n=(s.notes||{})[t]||{},m=moy(s,t),W=210,ms=l.map(x=>moy(x,t)).filter(x=>x!=null),av=ms.length?ms.reduce((p,c)=>p+c,0)/ms.length:null,GR=[0,150,90],OR=[247,127,0],tt=tot(s,t),rg=rk(l,t,s);
+ frame(d);wm(d,40,80,130);
+ d.setTextColor(20).setFont('helvetica','bold').setFontSize(7.5).text("MINISTÈRE DE L'ÉDUCATION NATIONALE\nET DE L'ALPHABÉTISATION",14,15);
+ d.setFont('helvetica','normal').text('DRENA : '+(C.drena||'')+(g=='p'?'\nIEPP : '+(C.iepp||''):''),14,24);
+ d.setFont('helvetica','bold').text("RÉPUBLIQUE DE CÔTE D'IVOIRE",W-14,15,{align:'right'});d.setFont('helvetica','italic').text('Union - Discipline - Travail',W-14,19,{align:'right'});
+ if(C.arm)try{d.addImage(C.arm,fm(C.arm),W/2-9,11,18,18)}catch(e){}
+ d.setFillColor(0,150,90).rect(14,31,W-28,11,'F');d.setFillColor(247,127,0).rect(14,42,W-28,1.4,'F');
+ d.setTextColor(255).setFont('helvetica','bold').setFontSize(13).text('BULLETIN DE NOTES - '+(t=='A'?'ANNUEL':'TRIMESTRE '+t),W/2,38.3,{align:'center'});
+ d.setTextColor(20).setFontSize(10).text((C.nom||'')+'   |   Année scolaire '+C.annee,W/2,49,{align:'center'});
+ if(s.photo)d.addImage(s.photo,'JPEG',14,54,27,34);else d.setDrawColor(150).rect(14,54,27,34);
+ d.setFontSize(12).text(s.nom+' '+s.prenoms,46,60);d.setFont('helvetica','normal').setFontSize(9.5).text(['Matricule : '+(s.mat||'-'),'Né(e) le '+(fd(s.ddn)||'-')+' à '+(s.lieu||'-'),'Sexe : '+(s.sexe=='M'?'Masculin':'Féminin')+'     Statut : '+(s.aff||'-'),'Classe : '+cO(s)+'     Effectif : '+l.length,'Redoublant(e) : '+(s.red||'Non')],46,66,{lineHeightFactor:1.5});
+ var o={startY:94,margin:{left:14,right:14},theme:'plain',styles:{lineWidth:.15,lineColor:GR,fontSize:9,textColor:20},headStyles:{fillColor:GR,textColor:255},footStyles:{fillColor:[253,235,215],textColor:20,fontStyle:'bold'}};
+ if(t=='A')d.autoTable(Object.assign(o,{head:[['Période','Moyenne /'+B,'Rang',g=='p'?'Appréciation':'Professeur']],body:['1','2','3','A'].map(q=>[q=='A'?'MOYENNE ANNUELLE':'Trimestre '+q,f2(moy(s,q)),rk(l,q,s),g=='p'?apprPrimaire(moy(s,q),B):''])}));
+ else if(g=='p')d.autoTable(Object.assign(o,{head:[['Matières','Barème','Note','Appréciation']],body:sb.map((x,i)=>{var v=parseFloat(n['m'+i]);return isNaN(v)?[x[0],'/'+x[2],'','']:[x[0],'/'+x[2],f2(v),apprPrimaire(v,x[2])]}),foot:[['TOTAL','/'+tt[1],f2(tt[0]),'']]}));
+ else d.autoTable(Object.assign(o,{head:[['Matières','Coef','Note /20','Points','Professeur']],body:sb.map((x,i)=>{var v=parseFloat(n['m'+i]);return isNaN(v)?[x[0],x[1],'','','']:[x[0],x[1],f2(v),f2(v*x[1]),'']}),foot:[['TOTAL',sb.reduce((p,x)=>p+x[1],0),'',f2(tt[0]),'']]}));
+ d.autoTable({startY:d.lastAutoTable.finalY+5,margin:{left:14,right:14},theme:'plain',styles:{lineWidth:.15,lineColor:OR,fontSize:9,halign:'center',textColor:20},headStyles:{fillColor:OR,textColor:255},head:[[t=='A'?'Total':'Total points','Moyenne /'+B,'Rang','Moy. de la classe','Plus forte','Plus faible']],body:[[t=='A'?'-':f2(tt[0])+' / '+tt[1],f2(m),rg?rg+'/'+l.length:'-',f2(av),f2(ms.length?Math.max.apply(0,ms):null),f2(ms.length?Math.min.apply(0,ms):null)]]});
+ var y=d.lastAutoTable.finalY+8;if(g!='p'){d.setFont('helvetica','bold').setFontSize(10).setTextColor(20).text('Professeur :',14,y);d.setDrawColor(130).setLineWidth(.25).line(38,y+1,118,y+1);}
+ if(t=='A'&&m!=null)d.setFontSize(12).setTextColor(m>=B/2?0:179,m>=B/2?150:38,m>=B/2?90:30).text('DÉCISION : '+(m>=B/2?"ADMIS(E) EN CLASSE SUPÉRIEURE":'REDOUBLE'),14,y+8);
+ d.setTextColor(20).setFontSize(9).setFont('helvetica','normal').text('Cachet',116,238,{align:'center'});d.text('Signature du directeur',157,238,{align:'center'});
+ if(C.cac)try{d.addImage(C.cac,fm(C.cac),102,240,28,24)}catch(e){}if(C.sig)try{d.addImage(C.sig,fm(C.sig),130,240,38,24)}catch(e){}
+ d.setFont('helvetica','bold').text(C.dir||'',157,269,{align:'center'});
+ d.setFont('helvetica','italic').setFontSize(7).setTextColor(100).text((C.nom||'')+(C.adr?' - '+C.adr:'')+(C.tel?' - Tél : '+C.tel:''),W/2,284,{align:'center'})}
+function cartes(l,fn){if(!l.length)return toast('Aucun élève.');var d=new jspdf.jsPDF('p','mm','a4'),GR=[0,150,90],OR=[247,127,0],w=92,h=62;
+ l.forEach((s,i)=>{if(i&&i%8==0)d.addPage();var k=i%8,x=8+(k%2)*(w+6),y=10+Math.floor(k/2)*(h+6);
+ d.setFillColor(255,255,255).setDrawColor(0,150,90).setLineWidth(.5).roundedRect(x,y,w,h,2.5,2.5,'FD');wm(d,x+w/2-19,y+17,38);
+ d.setFillColor(247,127,0).rect(x+3,y+1,(w-6)/3,1.6,'F');d.setFillColor(0,150,90).rect(x+3+2*(w-6)/3,y+1,(w-6)/3,1.6,'F');
+ d.setFillColor(0,150,90).rect(x+.5,y+3,w-1,13,'F');d.setFillColor(247,127,0).rect(x+.5,y+16,w-1,1.2,'F');
+ d.setFillColor(255,255,255).roundedRect(x+2.5,y+4.5,10,10,1,1,'F');if(C.arm)try{d.addImage(C.arm,fm(C.arm),x+3.3,y+5.3,8.4,8.4)}catch(e){}
+ d.setTextColor(255).setFont('helvetica','bold').setFontSize(7.2).text(d.splitTextToSize((C.nom||'ÉTABLISSEMENT').toUpperCase(),w-22).slice(0,2),x+w/2+5,y+8,{align:'center'});
+ d.setFontSize(6).setFont('helvetica','normal').text('CARTE SCOLAIRE - '+C.annee,x+w/2+5,y+13.5,{align:'center'});
+ d.setTextColor(20);if(s.photo)d.addImage(s.photo,'JPEG',x+3,y+20,23,30);else d.setDrawColor(150).rect(x+3,y+20,23,30);
+ d.setFontSize(9).setFont('helvetica','bold').text(s.nom,x+30,y+24);d.setFont('helvetica','normal').setFontSize(8).text(s.prenoms,x+30,y+28.5);
+ d.setFontSize(6.8).text(['Matricule : '+(s.mat||'-'),'Né(e) le '+(fd(s.ddn)||'-')+' à '+(s.lieu||'-'),'Classe : '+cO(s),'Sexe : '+s.sexe+'  -  '+(s.aff||'')],x+30,y+33,{lineHeightFactor:1.45});
+ d.setFontSize(5.2).text('Cachet',x+44,y+46,{align:'center'});d.text('Signature',x+67,y+46,{align:'center'});if(C.cac)try{d.addImage(C.cac,fm(C.cac),x+37,y+46.5,14,9)}catch(e){}if(C.sig)try{d.addImage(C.sig,fm(C.sig),x+51,y+46.5,23,9)}catch(e){}d.setFontSize(4.8).setFont('helvetica','bold').text(C.dir||'',x+67,y+58,{align:'center'});});
+ save(fn+'.pdf',d.output('arraybuffer'))}
+function vCo(){return `<div class="card"><h2>Matières, barèmes et coefficients</h2><p style="margin:0 0 10px;color:var(--mu)">Une ligne par matière : <b>Matière;coefficient;barème</b>. Modifiez la liste avant de saisir les notes.${NV.indexOf(cn)>9?' <b style="color:var(--er)">Valeurs provisoires : saisissez ici les coefficients de la grille officielle pour cette classe.</b>':''}</p><select onchange="cn=this.value;render()" aria-label="Niveau">${op(NV,cn)}</select><textarea id="co" rows="12" style="display:block;width:100%;margin:10px 0;font:inherit;padding:10px;border:1px solid var(--ln);border-radius:9px;background:var(--bg);color:var(--ink)">${esc(SB(cn).map(x=>x.join(';')).join('\n'))}</textarea><div class="bar2"><button class="btn" onclick="saveCo()">Enregistrer pour ${esc(cn)}</button><button class="s" onclick="resCo()">Valeurs par défaut</button></div></div>`}
+function saveCo(){C.mat=C.mat||{};C.mat[cn]=$('#co').value;saveC()}
+function resCo(){if(C.mat)delete C.mat[cn];saveC()}
+/* ---------- vues ---------- */
+function render(){charts.forEach(c=>c.destroy());charts=[];var a=$('#app');
+ if(!ok){a.innerHTML='<div class="lgn"><div class="login-credit">Application développée par KOFFI HERVE KOUAKOU</div><div class="card"><h1 style="margin-bottom:4px">GestSco CI</h1><p style="color:var(--mu);margin:0 0 20px">Gestion scolaire – Côte d’Ivoire</p><label for="u">Nom d’utilisateur</label><input id="u" autocomplete="username"><label for="p">Mot de passe</label><input id="p" type="password" autocomplete="current-password" onkeydown="if(event.key==\'Enter\')login()"><div id="err" style="color:var(--er);min-height:22px;margin-bottom:6px"></div><button class="btn" onclick="login()">Se connecter</button></div></div>';return}
+ var N={tb:['Tableau de bord',vTb],el:['Élèves',vEl],nt:['Saisie des notes',vNt],rs:['Résultats et bulletins',vRs],pr:['Paramètres de l’établissement',vPr]};
+ a.innerHTML='<div class="shell"><nav><div class="lg">'+esc(C.nom||'GestSco CI')+'</div><div class="sb">Année '+esc(C.annee)+'</div>'+Object.keys(N).map(k=>`<button class="${k==tab?'on':''}" onclick="tab='${k}';ed=null;render()">${N[k][0].split(' et ')[0]}</button>`).join('')+'<div class="sp"></div><button onclick="logout()">Déconnexion</button></nav><main>'+(local?'<div class="warn">Mode local : les données sont enregistrées dans ce navigateur sur cet appareil. Exportez régulièrement une sauvegarde.</div>':'')+'<div class="page-titlebar"><h1>'+N[tab][0]+'</h1><div class="top-credit">Application développée par KOFFI HERVE KOUAKOU</div></div>'+N[tab][1]()+'</main></div>';
+ if(tab=='tb'&&typeof Chart!=='undefined')drawCharts()}
+var perSel=a=>{var primary=cls&&NV.indexOf(cO({niveau:cls.split(' ')[0]}) )<6, opts=primary?(cls.split(' ')[0]==='CM2'?[['C1','Composition C1'],['C2','Composition C2'],['C3','Composition C3'],['C4','Composition C4'],['EB1','Examen blanc EB1'],['EB2','Examen blanc EB2']]:[['C1','Composition C1'],['C2','Composition C2'],['C3','Composition C3'],['C4','Composition C4']]):[['1','Trimestre 1'],['2','Trimestre 2'],['3','Trimestre 3']];if(a)opts=opts.concat([['A','Annuel']]);if(!opts.some(x=>x[0]===T))T=opts[0][0];return `<select aria-label="Période d’évaluation" onchange="T=this.value;render()">${opts.map(x=>`<option value="${x[0]}" ${x[0]===T?'selected':''}>${x[1]}</option>`).join('')}</select>`};
+var clsSel=()=>{var c=classes();if(!c.includes(cls))cls=c[0]||'';return c.length?`<select onchange="cls=this.value;render()">${c.map(x=>`<option ${x==cls?'selected':''}>${esc(x)}</option>`).join('')}</select>`:''};
+var thumb=s=>s.photo?`<img class="th" src="${s.photo}" alt="">`:`<span class="th"></span>`;
+
+function vTb(){var N=E.length,gar=E.filter(s=>s.sexe=='M').length,ms=E.map(s=>[s,moy(s,T)]).filter(x=>x[1]!=null),n20=x=>x[1]/bar(x[0].niveau)*20,
+ avg=ms.length?ms.reduce((p,x)=>p+n20(x),0)/ms.length:null,okn=ms.filter(x=>x[1]>=bar(x[0].niveau)/2).length,low=ms.filter(x=>n20(x)<8).length,cs=classes(),
+ ca=cs.map(c=>{var a=ms.filter(x=>cO(x[0])==c);return [c,a.length?a.reduce((p,x)=>p+n20(x),0)/a.length:null]}).filter(x=>x[1]!=null).sort((a,b)=>b[1]-a[1]),
+ ins=[];
+ if(!N)ins.push('Aucun élève enregistré : commencez par l’onglet Élèves, puis renseignez les notes.');else{ins.push('Parité : '+Math.round((N-gar)/N*100)+' % de filles ('+(N-gar)+' sur '+N+').');
+ if(ms.length){ins.push('Taux de réussite ('+pl().toLowerCase()+') : '+Math.round(okn/ms.length*100)+' % ('+okn+' élève(s) à la moyenne ou au-dessus).');if(ca.length>1)ins.push('Classe la plus performante : '+ca[0][0]+' ('+f2(ca[0][1])+'/20). Classe à accompagner : '+ca[ca.length-1][0]+' ('+f2(ca[ca.length-1][1])+'/20).');
+ if(low)ins.push(low+' élève(s) sous 8/20 à suivre en priorité.')}else ins.push('Aucune note pour cette période.')}
+ var top=ms.slice().sort((a,b)=>n20(b)-n20(a)).slice(0,5);
+ return `<div class="dashboard-hero"><div><span class="dashboard-kicker">PILOTAGE SCOLAIRE · ${esc(C.annee||'2026-2027')}</span><h2>${esc(C.nom?'Tableau de bord — '+C.nom:'Tableau de bord général')}</h2><p>Vue d’ensemble des effectifs et des performances scolaires.</p></div><div class="dashboard-controls"><label>Période analysée</label><br>${perSel(1)}</div></div><div class="kp dashboard-kpis"><div><span>Effectif total</span><b>${N}</b><span>Élèves enregistrés</span></div><div><span>Taux de réussite</span><b>${ms.length?Math.round(okn/ms.length*100)+' %':'–'}</b><span>Notes saisies</span></div><div><span>Redoublants</span><b>${E.filter(s=>s.red=='Oui').length}</b><span>Élèves concernés</span></div><div><span>Moyenne générale</span><b>${f2(avg)}</b><span>Selon les notes disponibles</span></div></div>
+ <div class="card dashboard-panel"><h2 class="dashboard-panel-title">Analyse automatique</h2><ul class="ins">${ins.map(x=>'<li>'+esc(x)+'</li>').join('')}</ul></div>
+ <div class="gr"><div class="card dashboard-panel"><h2 class="dashboard-panel-title">Répartition par sexe</h2><div class="ch"><canvas id="c1"></canvas></div></div><div class="card dashboard-panel"><h2 class="dashboard-panel-title">Affectés / non affectés</h2><div class="ch"><canvas id="c2"></canvas></div></div><div class="card dashboard-panel"><h2 class="dashboard-panel-title">Appréciations</h2><div class="ch"><canvas id="c3"></canvas></div></div></div>
+ <div class="gr"><div class="card dashboard-panel"><h2 class="dashboard-panel-title">Effectifs par niveau</h2><div class="ch"><canvas id="c4"></canvas></div></div><div class="card dashboard-panel"><h2 class="dashboard-panel-title">Moyenne par classe (/20)</h2><div class="ch"><canvas id="c5"></canvas></div></div></div>
+ <div class="card sc dashboard-panel"><div class="bar2"><h2 class="dashboard-panel-title" style="margin:0">Statistiques de la carte scolaire</h2><span class="ex">${exb('xSt')}</span></div><table><tr><th>Niveau</th><th>Garçons</th><th>Filles</th><th>Total</th><th>Redoublants</th><th>Affectés</th></tr>${statRows().map(r=>'<tr>'+r.map((c,i)=>'<td class="n">'+(i?c:'<b>'+c+'</b>')+'</td>').join('')+'</tr>').join('')}</table></div>
+ ${top.length?`<div class="card sc"><h2>Meilleurs élèves (${pl()})</h2><table>${top.map((x,i)=>`<tr><td>${i+1}</td><td>${thumb(x[0])} ${esc(x[0].nom+' '+x[0].prenoms)}</td><td>${esc(cO(x[0]))}</td><td class="n">${f2(x[1])}/${bar(x[0].niveau)}</td></tr>`).join('')}</table></div>`:''}<div class="dashboard-credit">Application développée par KOFFI HERVE KOUAKOU</div>`}
+function mk(id,type,lb,ds,o){var c=$('#'+id);if(c&&typeof Chart!=='undefined')charts.push(new Chart(c,{type:type,data:{labels:lb,datasets:ds},options:Object.assign({responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}},o||{})}))}
+function drawCharts(){var P=['#0A7A4B','#F77F00','#2D6CDF','#C2185B','#8E6CEF','#14B8A6','#E5B800'],ct=f=>E.filter(f).length,gar=ct(s=>s.sexe=='M'),A=['Excellent','Très bien','Bien','Assez bien','Insuffisant','Médiocre'],ms=E.map(s=>[s,moy(s,T)]).filter(x=>x[1]!=null),nv=NV.filter(n=>E.some(s=>s.niveau==n)),cs=classes();
+ mk('c1','doughnut',['Garçons','Filles'],[{data:[gar,E.length-gar],backgroundColor:[P[2],P[1]],borderWidth:0}]);
+ mk('c2','pie',['Affecté(e)s','Non affecté(e)s'],[{data:[ct(s=>s.aff=='Affecté(e)'),ct(s=>s.aff!='Affecté(e)')],backgroundColor:[P[0],P[1]],borderWidth:0}]);
+ mk('c3','pie',A,[{data:A.map(a=>ms.filter(x=>appr(x[1],bar(x[0].niveau))==a).length),backgroundColor:P,borderWidth:0}]);
+ mk('c4','bar',nv,[{label:'Garçons',data:nv.map(n=>ct(s=>s.niveau==n&&s.sexe=='M')),backgroundColor:P[2]},{label:'Filles',data:nv.map(n=>ct(s=>s.niveau==n&&s.sexe!='M')),backgroundColor:P[1]}],{scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true}},plugins:{legend:{position:'bottom'}}});
+ mk('c5','bar',cs,[{label:'Moyenne /20',data:cs.map(c=>{var a=ms.filter(x=>cO(x[0])==c);return a.length?+(a.reduce((p,x)=>p+x[1]/bar(x[0].niveau)*20,0)/a.length).toFixed(2):0}),backgroundColor:P[0]}],{scales:{y:{beginAtZero:true,max:20}},plugins:{legend:{display:false}}})}
+
+function vEl(){var l=E.slice().sort((a,b)=>NV.indexOf(a.niveau)-NV.indexOf(b.niveau)||cO(a).localeCompare(cO(b))||a.nom.localeCompare(b.nom));
+ return `<div class="bar2"><button class="btn" onclick="ed={niveau:'CP1',sexe:'M',red:'Non',aff:'Affecté(e)',nat:'Ivoirienne'};render()">+ Nouvel élève</button><input placeholder="Rechercher…" oninput="filt(this.value)" aria-label="Rechercher"><span class="ex">${exb('xEl')}</span><button class="s" onclick="cartes(E.slice().sort(ordE),'cartes-scolaires')">Cartes scolaires (PDF)</button></div>${ed?fEl():''}
+ <div class="card sc"><table id="lst"><tr><th></th><th>Matricule</th><th>Nom et prénoms</th><th>Sexe</th><th>Classe</th><th>Statut</th><th></th></tr>${l.map(s=>`<tr data-t="${esc((s.nom+' '+s.prenoms+' '+(s.mat||'')+' '+cO(s)).toLowerCase())}"><td>${thumb(s)}</td><td>${esc(s.mat)}</td><td>${esc(s.nom+' '+s.prenoms)}</td><td>${s.sexe}</td><td>${esc(cO(s))}</td><td>${esc(s.aff)}${s.red=='Oui'?' <span class="bd r">Red.</span>':''}</td><td><button class="s" onclick="edit('${s.id}')">Modifier</button> <button class="s" onclick="cartes([E.find(x=>x.id=='${s.id}')],'carte-${esc(s.nom)}')">Carte</button> <button class="s" onclick="del('${s.id}',this)">Supprimer</button></td></tr>`).join('')||'<tr><td colspan="7" style="color:var(--mu)">Aucun élève pour l’instant.</td></tr>'}</table></div>`}
+var filt=v=>document.querySelectorAll('#lst tr[data-t]').forEach(r=>r.style.display=r.dataset.t.includes(v.toLowerCase())?'':'none');
+var op=(a,v)=>a.map(x=>`<option ${x==v?'selected':''}>${esc(x)}</option>`).join('');
+function fEl(){var e=ed;return `<div class="card"><h2>${e.id?'Modifier':'Nouvel'} élève</h2><div class="fm">
+<div><label>Matricule</label><input id="f_mat" value="${esc(e.mat)}"></div><div><label>Nom</label><input id="f_nom" value="${esc(e.nom)}"></div><div><label>Prénoms</label><input id="f_prenoms" value="${esc(e.prenoms)}"></div>
+<div><label>Sexe</label><select id="f_sexe"><option value="M" ${e.sexe=='M'?'selected':''}>M</option><option value="F" ${e.sexe=='F'?'selected':''}>F</option></select></div>
+<div><label>Date de naissance</label><input id="f_ddn" type="date" value="${esc(e.ddn)}"></div><div><label>Lieu de naissance</label><input id="f_lieu" value="${esc(e.lieu)}"></div>
+<div><label>Niveau</label><select id="f_niveau">${op(NV,e.niveau)}</select></div><div><label>Division (A, B…)</label><input id="f_div" value="${esc(e.div)}"></div>
+<div><label>Redoublant(e)</label><select id="f_red">${op(['Non','Oui'],e.red)}</select></div><div><label>Statut</label><select id="f_aff">${op(['Affecté(e)','Non affecté(e)'],e.aff)}</select></div><div><label>Nationalité</label><select id="f_nat">${op(['Ivoirienne','Étrangère'],e.nat)}</select></div>
+<div><label>Photo</label><input type="file" accept="image/*" onchange="pick(this,'photo',220,'image/jpeg')"><img id="pv_photo" class="im" style="${e.photo?'':'display:none'}" src="${e.photo||''}" alt=""></div></div>
+<div class="bar2" style="margin:12px 0 0"><button class="btn" onclick="saveEl()">Enregistrer</button><button class="s" onclick="ed=null;render()">Annuler</button></div></div>`}
+function pick(inp,k,max,type){var f=inp.files[0];if(!f)return;var transparent=(k==='sig'||k==='cac'),r=new FileReader();r.onload=()=>{var i=new Image();i.onload=()=>{var z=Math.min(1,max/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(i.width*z));c.height=Math.max(1,Math.round(i.height*z));var x=c.getContext('2d',{willReadFrequently:true});x.clearRect(0,0,c.width,c.height);x.drawImage(i,0,0,c.width,c.height);if(transparent){var im=x.getImageData(0,0,c.width,c.height),px=im.data;for(var q=0;q<px.length;q+=4){var mx=Math.max(px[q],px[q+1],px[q+2]),mn=Math.min(px[q],px[q+1],px[q+2]);if(px[q]>238&&px[q+1]>238&&px[q+2]>238){px[q+3]=0}else if(mx-mn<18&&mx>218){px[q+3]=Math.round(px[q+3]*(255-mx)/37)}}x.putImageData(im,0,0)}else if(type==='image/jpeg'){x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(i,0,0,c.width,c.height)}var outType=transparent?'image/png':type,u=c.toDataURL(outType,.9);(ed||C)[k]=u;var p=$('#pv_'+k);if(p){p.src=u;p.style.display='block'}};i.src=r.result};r.readAsDataURL(f)}
+var edit=id=>{ed=Object.assign({},E.find(s=>s.id==id));render()};
+async function saveEl(){var g=i=>$('#f_'+i).value.trim(),o={nom:g('nom').toUpperCase(),prenoms:g('prenoms'),mat:g('mat'),sexe:g('sexe'),ddn:g('ddn'),lieu:g('lieu'),niveau:g('niveau'),div:g('div').toUpperCase(),red:g('red'),aff:g('aff'),nat:g('nat'),photo:ed.photo||''};
+ if(!o.nom||!o.prenoms)return toast('Nom et prénoms obligatoires.');var old=ed.id?E.find(s=>s.id==ed.id):null,full=Object.assign({notes:{}},old||{},o);delete full.id;
+ try{if(db){if(ed.id)await db.doc('eleves/'+ed.id).set(full);else await db.collection('eleves').add(full)}else{if(ed.id)Object.assign(old,full);else E.push(Object.assign({id:'l'+Date.now()},full));if(!persistLocalData())return}ed=null;toast('Élève enregistré.');render()}catch(e){toast('Enregistrement impossible.')}}
+async function del(id,b){if(!b.dataset.c){b.dataset.c=1;b.textContent='Confirmer ?';return}try{if(db)await db.doc('eleves/'+id).delete();else{E=E.filter(s=>s.id!=id);if(!persistLocalData())return}toast('Élève supprimé.');render()}catch(e){toast('Suppression impossible.')}}
+
+function vNt(){if(T=='A')T='1';var l=byCls(),sb=l.length?SB(l[0].niveau):[],B=l.length?bar(l[0].niveau):20;
+ if(!l.length)return '<div class="card">Ajoutez d’abord des élèves pour saisir leurs notes.</div>';
+ return `<div class="bar2">${clsSel()}${perSel(0)}<span style="color:var(--mu)">Chaque colonne indique son barème. Le total et la moyenne se calculent pendant la saisie.</span><button class="btn" onclick="saveNotes()">Enregistrer les notes</button></div><div class="card sc nt"><table><tr><th>Élève</th>${sb.map(x=>`<th>${esc(x[0])}<br>/${x[2]}${grp(l[0].niveau)=='p'?'':' · coef '+x[1]}</th>`).join('')}<th>Total</th><th>Moyenne</th></tr>${l.map(s=>`<tr><td>${esc(s.nom+' '+s.prenoms)}</td>${sb.map((x,i)=>{var v=((s.notes||{})[T]||{})['m'+i];return `<td><input inputmode="decimal" value="${v==null?'':v}" oninput="liveNote('${s.id}',${i},this)" onchange="setNote('${s.id}',${i},this.value,this)" aria-label="${esc(x[0])}"></td>`}).join('')}<td class="n" id="to${s.id}">${ttl(s)}</td><td class="n" id="mo${s.id}"><b>${f2(moy(s,T))}</b></td></tr>`).join('')}</table></div>`}
+function setNote(id,i,v,el){var s=E.find(x=>x.id==id);if(!s)return;var B=SB(s.niveau)[i][2];s.notes=s.notes||{};var n=s.notes[T]=s.notes[T]||{};v=String(v==null?'':v).trim();
+ if(v===''){delete n['m'+i]}else{var num=parseFloat(v.replace(',','.'));if(!Number.isFinite(num)||num<0||num>B){toast('La note doit être comprise entre 0 et '+B+'.');el.value=n['m'+i]==null?'':n['m'+i];return}n['m'+i]=num;el.value=String(num)}
+ $('#mo'+id).innerHTML='<b>'+f2(moy(s,T))+'</b>';$('#to'+id).textContent=ttl(s);dirty[id]=1;
+ if(!db){if(persistLocalData()){delete dirty[id];toast('Note enregistrée sur cet appareil.')}}
+ else db.doc('eleves/'+id).update({notes:s.notes}).then(()=>{delete dirty[id]}).catch(()=>toast('Note non enregistrée en ligne. Cliquez sur « Enregistrer les notes » pour réessayer.'))
+}
+var dirty={},ttl=s=>{var t=tot(s,T);return f2(t[0])+' / '+t[1]};
+function liveNote(id,i,el){var s=E.find(x=>x.id==id);if(!s)return;var mx=SB(s.niveau)[i][2],v=el.value.trim().replace(',','.');s.notes=s.notes||{};var n=s.notes[T]=s.notes[T]||{};
+ if(v===''){delete n['m'+i];el.style.outline=''}else{var f=Number(v);if(!Number.isFinite(f)||f<0||f>mx){el.style.outline='2px solid var(--er)';dirty[id]=1;return}el.style.outline='';n['m'+i]=f}
+ dirty[id]=1;$('#to'+id).textContent=ttl(s);$('#mo'+id).innerHTML='<b>'+f2(moy(s,T))+'</b>'}
+async function saveNotes(){var ids=Object.keys(dirty);if(!ids.length)return toast('Aucune modification à enregistrer.');
+ try{if(db){for(var k=0;k<ids.length;k++){var s=E.find(x=>x.id==ids[k]);if(s)await db.doc('eleves/'+ids[k]).update({notes:s.notes})}}else{if(!persistLocalData())return}dirty={};toast('Notes enregistrées pour '+ids.length+' élève(s).')}catch(e){toast('Enregistrement impossible. Vérifiez la connexion puis réessayez.')}}
+
+function vRs(){var l=rowsRs();if(!l.length)return '<div class="card">Aucun élève à afficher.</div>';var B=bar(l[0].s.niveau),ss=l.map(x=>x.s),ms=l.map(x=>x.m).filter(x=>x!=null),av=ms.length?ms.reduce((p,c)=>p+c,0)/ms.length:null,okn=ms.filter(x=>x>=B/2).length;
+ return `<div class="bar2">${clsSel()}${perSel(1)}<span class="ex">${exb('xRs')}</span><button class="s" onclick="bulls(rowsRs().map(x=>x.s),'bulletins-'+cls.replace(/\\s/g,'_')+'-'+T)">Bulletins de la classe (PDF)</button><button class="s" onclick="cartes(byCls(),'cartes-'+cls.replace(/\\s/g,'_'))">Cartes de la classe (PDF)</button><button class="s" onclick="bulls(E.slice().sort(ordE),'bulletins-tous-'+T)">Tous les bulletins de l’école (PDF)</button></div>
+ <div class="kp"><div><b>${f2(av)}</b><span>Moyenne de la classe /${B}</span></div><div><b>${f2(ms.length?Math.max.apply(0,ms):null)}</b><span>Plus forte</span></div><div><b>${f2(ms.length?Math.min.apply(0,ms):null)}</b><span>Plus faible</span></div><div><b>${ms.length?Math.round(okn/ms.length*100)+' %':'–'}</b><span>Réussite (≥ ${B/2})</span></div></div>
+ <div class="card sc"><table><tr><th>Rang</th><th></th><th>Nom et prénoms</th><th>Moyenne /${B}</th><th>Appréciation</th><th>${T=='A'?'Décision':'Distinction'}</th><th></th></tr>${l.map(x=>`<tr><td class="n">${rk(ss,T,x.s)}</td><td>${thumb(x.s)}</td><td>${esc(x.s.nom+' '+x.s.prenoms)}</td><td class="n"><b>${f2(x.m)}</b></td><td>${appr(x.m,B)}</td><td>${T=='A'?(dec(x.s)?`<span class="bd ${dec(x.s)=='Redouble'?'r':''}">${dec(x.s)}</span>`:''):esc(dist(x.m,B))}</td><td><button class="s" onclick="bull1('${x.s.id}')">Bulletin PDF</button></td></tr>`).join('')}</table></div>`}
+
+function vPr(){var f=(k,l)=>`<div><label>${l}</label><input id="c_${k}" value="${esc(C[k])}"></div>`;
+ return `<div class="card"><div class="fm">${f('nom','Nom de l’établissement')}${f('code','Code établissement')}<div><label>Année scolaire</label><input id="c_annee" value="2026-2027" readonly aria-readonly="true" title="Année scolaire fixe : 2026-2027" style="background:var(--ln);cursor:not-allowed"></div>${f('dir','Nom du directeur / de la directrice')}${f('drena','DRENA')}${f('iepp','IEPP (primaire)')}${f('adr','Adresse')}${f('tel','Téléphone')}
+ <div><label>Signature du directeur</label><input type="file" accept="image/*" onchange="pick(this,'sig',320,'image/png')"><img id="pv_sig" class="im" style="${C.sig?'':'display:none'}" src="${C.sig||''}" alt=""></div>
+ <div><label>Armoiries (filigrane et en-tête)</label><input type="file" accept="image/*" onchange="pick(this,'arm',320,'image/jpeg')"><img id="pv_arm" class="im" style="${C.arm?'':'display:none'}" src="${C.arm||''}" alt=""></div>
+ <div><label>Cachet de l’établissement</label><input type="file" accept="image/*" onchange="pick(this,'cac',260,'image/png')"><img id="pv_cac" class="im" style="${C.cac?'':'display:none'}" src="${C.cac||''}" alt=""></div></div>
+ <div class="bar2" style="margin:14px 0 0"><button class="btn" onclick="saveC()">Enregistrer</button></div></div>
+ <div class="card"><h2>Sauvegarde locale</h2><p>Exportez les élèves, les notes et les paramètres dans un fichier JSON.</p><button class="btn" onclick="exportBackup()">Télécharger la sauvegarde JSON</button> <label class="s" style="display:inline-block;cursor:pointer">Restaurer JSON<input type="file" accept="application/json,.json" style="display:none" onchange="importBackup(this)"></label></div>
+ <div class="card"><h2>Barèmes appliqués</h2><p style="margin:0;color:var(--mu)">CP1 à CE2 : moyenne sur 10 (passage à 5). CM1, CM2 et secondaire : moyenne sur 20 (passage à 10). Moyenne = points pondérés / total des barèmes × barème de la classe ; moyenne annuelle = moyenne des trois trimestres.</p></div>${vCo()}`}
+async function saveC(){['nom','code','dir','drena','iepp','adr','tel'].forEach(k=>C[k]=$('#c_'+k).value.trim());C.annee='2026-2027';try{if(db)await db.doc('config/ecole').set(C);else if(!persistLocalData())return;toast('Paramètres enregistrés.');render()}catch(e){toast('Enregistrement impossible.')}}
+function exportBackup(){var payload={format:'GESTSCO_CI_BACKUP_V1',date:new Date().toISOString(),ecole:C,eleves:E};save('sauvegarde-gestsco-ci.json',new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'}))}
+async function importBackup(inp){var f=inp.files&&inp.files[0];if(!f)return;try{var data=JSON.parse(await f.text());if(!data||!Array.isArray(data.eleves)||!data.ecole)throw new Error('format');if(!confirm('Restaurer cette sauvegarde remplacera les données visibles dans cette application. Continuer ?')){inp.value='';return}C=Object.assign(C,data.ecole);C.annee='2026-2027';E=data.eleves;if(db){toast('Import non appliqué à la base en ligne. Utilisez la procédure de sauvegarde de la base connectée.')}else if(!persistLocalData())return;else{toast('Sauvegarde restaurée.');render()}}catch(e){toast('Fichier JSON invalide ou illisible.')}finally{inp.value=''}}
+try{if(localStorage.getItem('GESTSCO_CI_AUTH_OK_V1')==='1'){ok=true;boot()}else render()}catch(e){render()}
+</script>
+</body>
+</html>
