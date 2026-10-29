@@ -283,5 +283,13 @@ function exportBackup(){var payload={format:'GESTSCO_CI_BACKUP_V1',date:new Date
 async function importBackup(inp){var f=inp.files&&inp.files[0];if(!f)return;try{var data=JSON.parse(await f.text());if(!data||!Array.isArray(data.eleves)||!data.ecole)throw new Error('format');if(!confirm('Restaurer cette sauvegarde remplacera les données visibles dans cette application. Continuer ?')){inp.value='';return}C=Object.assign(C,data.ecole);C.annee='2026-2027';E=data.eleves;if(db){toast('Import non appliqué à la base en ligne. Utilisez la procédure de sauvegarde de la base connectée.')}else if(!persistLocalData())return;else{toast('Sauvegarde restaurée.');render()}}catch(e){toast('Fichier JSON invalide ou illisible.')}finally{inp.value=''}}
 try{if(localStorage.getItem('GESTSCO_CI_AUTH_OK_V1')==='1'){ok=true;boot()}else render()}catch(e){render()}
 </script>
+ <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .catch(error => console.error("Service worker :", error));
+  });
+}
+</script>
 </body>
 </html>
